@@ -1,0 +1,33 @@
+{
+  "last_updated": "2026-04-18",
+  "total_count": 2,
+  "apps": [
+    {
+      "app_id": "com.rin.store.app1",
+      "name": "Class Widgets 2",
+      "developer": "RinLit",
+      "version": "2.0.0",
+      "download_url": "https://ghfile.geekertao.top/https://github.com/Class-Widgets/Class-Widgets/releases/download/v1.2.0.1/ClassWidgets-Windows-x64.zip",
+      "icon": "../assets/img/Application2.png",
+      "desc": "在教室的一体机上华丽地显示课表"
+    },
+    {
+      "app_id": "com.rin.store.app2",
+      "name": "RinUI 官网",
+      "developer": "RinLit",
+      "version": "1.0.0",
+      "download_url": "https://github.com/RinLit-233-shiroko/Rin-UI/releases/download/beta-0.2.1/RinUIGallery-Windows.zip",
+      "icon": "https://raw.githubusercontent.com/RinLit-233-shiroko/Rin-UI/refs/heads/master/docs/img/logo.png",
+      "desc": "Fluent风格的UI组件库，提供丰富的组件和工具，帮助开发者快速构建现代化应用。"
+    },
+    {
+      "app_id": "com.orlyn.teachconnect.app",
+      "name": "师室互联",
+      "developer": "Orlyn",
+      "version": "1.0.0",
+      "download_url": "https://github.com/pyTeachConnect/TeachConnect/releases/download/Beta-0.3.0/TC-Tside-Setup.exe",
+      "icon": "https://raw.githubusercontent.com/pyTeachConnect/TeachConnect/refs/heads/main/TC-img/favicon.png",
+      "desc": "连接教室与教师"
+    }
+  ]
+}

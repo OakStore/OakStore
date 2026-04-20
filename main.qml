@@ -16,7 +16,7 @@ FluentWindow {
     title: "AppStore"
     defaultPage: Qt.resolvedUrl("pages/Home.qml")
 
-    // search field
+    // 搜索框
     titleBarArea: AutoSuggestBox {
         id: searchField
         width: 325
@@ -30,7 +30,7 @@ FluentWindow {
             if (selected && selected.page) {
                 navigationView.push(selected.page)
             } else {
-                // 没找到，跳到搜索页面
+                // 未命中则跳转搜索页
                 console.log("Search for: " + searchField.text)
                 navigationView.push(Qt.resolvedUrl("pages/Search.qml"), { query: searchField.text || "" })
             }

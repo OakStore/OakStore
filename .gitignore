@@ -1,5 +1,6 @@
 venv/
 RinUI/
+Download/
 
 # Python 虚拟环境/缓存
 __pycache__/
