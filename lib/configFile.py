@@ -1,5 +1,6 @@
 import json
 import pathlib
+import os
 from loguru import logger
 
 
@@ -38,7 +39,8 @@ class Initialization:
             data = {
                 "path": {
                     "cachePath": "./cache",
-                    "appInstallPath": "./APP"
+                    "appInstallPath": "./APP",
+                    "installPath": f"{os.path.expanduser('~')}/AppData/Local/Programs/OakStoreAPP"
                 },
                 "url": {
                     "cloudConfig": "https://github.com/OakStore/OakStore/raw/refs/heads/cloudConfig/cloud.json"
@@ -60,7 +62,41 @@ class Initialization:
 
 
 class jsonFile:
-    def readJson(self, file_path, keyPath):
+    def readJson(self, json, keyPath):
+        """
+        读取json内容
+        Args:
+            json: json内容
+            keyPath: 要读取的键
+
+        Returns:
+
+        """
+        data = json.load(json)
+
+        parts = keyPath.lstrip('/').split('/')    # 解析 keyPath
+
+        for part in parts:
+            if part == '':
+                continue
+            if isinstance(data, dict):
+                if part not in data:
+                    raise KeyError(f"键 '{part}' 不存在")
+                data = data[part]
+            elif isinstance(data, list):
+                try:
+                    idx = int(part)
+                    data = data[idx]
+                except ValueError:
+                    raise KeyError(f"列表索引必须是整数，得到 '{part}'")
+                except IndexError:
+                    raise IndexError(f"列表索引 {idx} 超出范围")
+            else:
+                raise TypeError(f"无法在类型 {type(data).__name__} 上访问 '{part}'")
+
+        return data
+
+    def readJsonFile(self, file_path, keyPath):
         """
         从JSON文件读取指定路径的值
         路径格式：类似 '/data/value/main'，以 '/' 分隔

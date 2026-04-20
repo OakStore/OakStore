@@ -35,6 +35,7 @@ def download(url, savePath="./Download", speed=0, progress_callback=None):
             logger.warning("无法获取文件大小")
         downloaded = 0
         start_time = time.time()
+        last_log_time = start_time
         chunk_size = 8192
 
         with open(filepath, 'wb') as f:
