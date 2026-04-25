@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: LGPL-3-or-later
+# Copyright (C) 2026 Lyang1273 & Orlyn
+
 import json
 import pathlib
 import os
@@ -36,11 +39,20 @@ class Initialization:
             self.configDir.mkdir(parents=True, exist_ok=True)
             configPath = self.configDir / "config.json"
 
+            """
+            path: 路径
+                cachePath: 缓存
+                appInstallPath: 应用安装
+                installPath: 应用安装？（忘了）
+            url: 顾名思义
+                cloudConfig: 云端配置
+            """
+
             data = {
                 "path": {
-                    "cachePath": "./cache",
-                    "appInstallPath": "./APP",
-                    "installPath": f"{os.path.expanduser('~')}/AppData/Local/Programs/OakStoreAPP"
+                    "cachePath": f"{os.path.expanduser('~')}/AppData/Local/Programs/OakStore/cache",
+                    "appInstallPath": f"{os.path.expanduser('~')}/AppData/Local/Programs/OakStore/APP",
+                    "installPath": f"{os.path.expanduser('~')}/AppData/Local/Programs/OakStore/APP"
                 },
                 "url": {
                     "cloudConfig": "https://github.com/OakStore/OakStore/raw/refs/heads/cloudConfig/cloud.json"

@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: LGPL-3-or-later
+// Copyright (C) 2026 Lyang1273 & Orlyn
+
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 2.15

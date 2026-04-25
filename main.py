@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: LGPL-3-or-later
+# Copyright (C) 2026 Lyang1273 & Orlyn
+
 import sys
 import json
 from loguru import logger
