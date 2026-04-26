@@ -1,9 +1,15 @@
+annotated-types==0.7.0
 certifi==2026.2.25
 charset-normalizer==3.4.7
 colorama==0.4.6
 darkdetect==0.8.0
 idna==3.11
+logger==1.4
 loguru==0.7.3
+micropython-rp2-pico-stubs==1.20.0.post5
+micropython-stdlib-stubs==1.27.0.post2
+pydantic==2.12.5
+pydantic_core==2.41.5
 PySide6==6.11.0
 PySide6_Addons==6.11.0
 PySide6_Essentials==6.11.0
@@ -11,5 +17,7 @@ pywin32==311
 requests==2.33.1
 RinUI==0.2.1
 shiboken6==6.11.0
+typing-inspection==0.4.2
+typing_extensions==4.15.0
 urllib3==2.6.3
 win32_setctime==1.2.0
