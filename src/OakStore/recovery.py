@@ -3,7 +3,7 @@ from tkinter import ttk, messagebox
 import os
 import sys
 import subprocess
-import configFile
+from . import configFile
 
 
 class RecoveryMode:
@@ -11,9 +11,9 @@ class RecoveryMode:
         self.root = root
         self.root.title("恢复模式")
         self.root.resizable(False, False)
-        self.root.geometry("300x500")
-        self.root.minsize(250, 300)
-        self.root.maxsize(250, 300)
+        self.root.geometry("250x350")
+        self.root.minsize(250, 350)
+        self.root.maxsize(250, 350)
 
         # 按钮框架
         frame = ttk.Frame(root)
@@ -29,7 +29,7 @@ class RecoveryMode:
 
         self.clear_btn = ttk.Button(
             frame,
-            text="更改基本配置",
+            text="更改基本配置与可能影响启动的配置",
             command=self.change_settings,
             width=40
         )
@@ -53,15 +53,23 @@ class RecoveryMode:
 
         self.restart = ttk.Button(
             frame,
-            text="重新启动到正常模式",
+            text="软重启到正常模式",
             command=self.restart,
             width=40
         )
         self.restart.pack(pady=5)
 
+        self.re_btn = ttk.Button(
+            frame,
+            text="软重启到恢复模式",
+            command=lambda: RecoveryMode.restart(mode="--re"),
+            width=40
+        )
+        self.re_btn.pack(pady=5)
+
         self.debug_btn = ttk.Button(
             frame,
-            text="重新启动到调试模式",
+            text="软重启到调试模式",
             command=lambda: RecoveryMode.restart(mode="--de"),
             width=40
         )
