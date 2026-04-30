@@ -26,7 +26,7 @@ def Debug():
 
     # 创建第二个标签页
     download = ttk.Frame(notebook)
-    notebook.add(download, text="下载测试")
+    notebook.add(download, text="下载与安装测试")
 
     download_label = ttk.Label(download, text="下载测试", font=("微软雅黑", 14))
     download_label.pack(pady=20)
@@ -40,6 +40,9 @@ def Debug():
     def download_test(progress):
         download_progressbar["value"] = progress
         root.update()
+
+    def download_and_install_test():
+
 
     root.mainloop()
 

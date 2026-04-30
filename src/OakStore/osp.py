@@ -1,11 +1,12 @@
 # SPDX-License-Identifier: LGPL-3-or-later
 # Copyright (C) 2026 Lyang1273 & Orlyn
-
+import os
 from loguru import logger
 import zipfile
 import traceback
 import json
 import configFile
+import shutil
 
 
 def unzip(path, outputPath):
@@ -56,22 +57,32 @@ def APPInfo(path):
         logger.error(f"读取文件时出错，因为 {e}")
         return None
 
-def installAPP(packagePath, installPath):
+def installAPP(packagePath):
     """
     安装应用
     :param packagePath: 应用包位置
     :param installPath: 安装位置
     :return: bool
     """
-    json_file = configFile.jsonFile()
-    cache_path = "."+json_file.readJsonFile("../config/config.json", "/path/cachePath")
+    logger.info(f"安装位于{packagePath}的应用包")
+    cache_path = configFile.jsonFile.readJsonFile(f"{os.path.expanduser('~')}/AppData/Local/OakStore/config/config.json", "/path/cachePath")
 
-    if unzip(packagePath, cache_path):
+    logger.info("正在清理安装缓存")
+    shutil.rmtree(f"{cache_path}/install")
+
+    logger.info("开始安装")
+    if unzip(packagePath, cache_path+"/install"):
         # 解析应用信息
-        info = APPInfo(cache_path + "APPInfo.json")
-        
+        info = APPInfo(cache_path+"/install")
+        logger.info(f"所安装应用的信息\n{info}")
+        logger.info("复制程序文件")
+        os.makedirs(configFile.jsonFile.readJsonFile(f"{os.path.expanduser('~')}/AppData/Local/OakStore/config/config.json", "/path/appInstallPath")+"/"+configFile.jsonFile.readJson(info, "/BasicInfo/AppPackageName"), exist_ok=True)
+        shutil.copytree(configFile.jsonFile.readJsonFile(f"{os.path.expanduser('~')}/AppData/Local/OakStore/config/config.json", "/path/cachePath")+"/install", configFile.jsonFile.readJsonFile(f"{os.path.expanduser('~')}/AppData/Local/OakStore/config/config.json", "/path/appInstallPath")+"/"+configFile.jsonFile.readJson(info, "/BasicInfo/AppPackageName"), dirs_exist_ok=True)
+        logger.info("复制完成")
+        logger.info("将应用添加至已安装列表")
+
 
 
 # unzip("../core1.py", "../cache")
-APPInfo("../data")
-installAPP("D:\\Python\\OSP-File\\260401.osp", 0)
+# APPInfo("../data")
+installAPP("D:\\Python\\OSP-File\\260401.osp")

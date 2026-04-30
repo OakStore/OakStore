@@ -146,6 +146,7 @@ class RecoveryMode:
 
         ttk.Button(button_frame, text="保存", command=save_settings, width=10).pack(side=tk.LEFT, padx=5)
         ttk.Button(button_frame, text="取消", command=cancel, width=10).pack(side=tk.LEFT, padx=5)
+        ttk.Label(button_frame, text="此功能是未完工的半成品").pack(side=tk.RIGHT)
 
     def clear_cache(self):
         if messagebox.askyesno("确认", "清除缓存，确定吗？"):

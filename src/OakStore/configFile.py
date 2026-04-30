@@ -57,8 +57,8 @@ class Initialization:
             data = {
                 "path": {
                     "cachePath": f"{os.path.expanduser('~')}/AppData/Local/OakStore/cache",
-                    "appInstallPath": f"{os.path.expanduser('~')}/AppData/Local/OakStoreInstall/APP",
-                    "installPath": f"{os.path.expanduser('~')}/AppData/Local/OakStoreInstall/APP"
+                    "appInstallPath": f"{os.path.expanduser('~')}/AppData/Local/OakStoreInstall/APP/",
+                    "installPath": f"{os.path.expanduser('~')}/AppData/Local/OakStoreInstall/APP/"
                 },
                 "url": {
                     "cloudConfig": "https://github.com/OakStore/OakStore/raw/refs/heads/cloudConfig/cloud.json"
@@ -91,7 +91,7 @@ class jsonFile:
         Returns:
 
         """
-        data = json.load(json_obj)
+        data = json_obj
 
         parts = keyPath.lstrip('/').split('/')    # 解析 keyPath
 
