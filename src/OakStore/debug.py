@@ -42,7 +42,7 @@ def Debug():
         root.update()
 
     def download_and_install_test():
-
+        pass
 
     root.mainloop()
 
