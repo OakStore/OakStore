@@ -22,7 +22,6 @@ def start_recovery_mode():
 def start_normal_mode():
     """启动正常模式"""
     print("启动正常模式")
-    # 你的正常应用逻辑
     pass
 
 if __name__ == "__main__":
