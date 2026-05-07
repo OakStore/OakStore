@@ -5,8 +5,9 @@ from loguru import logger
 import zipfile
 import traceback
 import json
-import configFile
 import shutil
+from . import appManagement
+from . import configFile
 
 
 def unzip(path, outputPath):
@@ -68,7 +69,10 @@ def installAPP(packagePath):
     cache_path = configFile.jsonFile.readJsonFile(f"{os.path.expanduser('~')}/AppData/Local/OakStore/config/config.json", "/path/cachePath")
 
     logger.info("正在清理安装缓存")
-    shutil.rmtree(f"{cache_path}/install")
+    try:
+        shutil.rmtree(f"{cache_path}/install")
+    except Exception:
+        pass
 
     logger.info("开始安装")
     if unzip(packagePath, cache_path+"/install"):
@@ -77,12 +81,19 @@ def installAPP(packagePath):
         logger.info(f"所安装应用的信息\n{info}")
         logger.info("复制程序文件")
         os.makedirs(configFile.jsonFile.readJsonFile(f"{os.path.expanduser('~')}/AppData/Local/OakStore/config/config.json", "/path/appInstallPath")+"/"+configFile.jsonFile.readJson(info, "/BasicInfo/AppPackageName"), exist_ok=True)
-        shutil.copytree(configFile.jsonFile.readJsonFile(f"{os.path.expanduser('~')}/AppData/Local/OakStore/config/config.json", "/path/cachePath")+"/install", configFile.jsonFile.readJsonFile(f"{os.path.expanduser('~')}/AppData/Local/OakStore/config/config.json", "/path/appInstallPath")+"/"+configFile.jsonFile.readJson(info, "/BasicInfo/AppPackageName"), dirs_exist_ok=True)
+        shutil.copytree(configFile.jsonFile.readJsonFile(f"{os.path.expanduser('~')}/AppData/Local/OakStore/config/config.json", "/path/cachePath")+"/install/APP", configFile.jsonFile.readJsonFile(f"{os.path.expanduser('~')}/AppData/Local/OakStore/config/config.json", "/path/appInstallPath")+"/"+configFile.jsonFile.readJson(info, "/BasicInfo/AppPackageName"), dirs_exist_ok=True)
+        shutil.copy2(configFile.jsonFile.readJsonFile(f"{os.path.expanduser('~')}/AppData/Local/OakStore/config/config.json", "/path/cachePath")+"/install/AppInfo.json", configFile.jsonFile.readJsonFile(f"{os.path.expanduser('~')}/AppData/Local/OakStore/config/config.json", "/path/appInstallPath")+"/"+configFile.jsonFile.readJson(info, "/BasicInfo/AppPackageName"))
         logger.info("复制完成")
-        logger.info("将应用添加至已安装列表")
+        appManagement.app_list_operation("add", data = {
+            configFile.jsonFile.readJson(info, "/BasicInfo/AppPackageName"): {
+                "name": configFile.jsonFile.readJson(info, "/BasicInfo/AppName"),
+                "version": configFile.jsonFile.readJson(info, "/BasicInfo/AppVersion"),
+                "version_code": configFile.jsonFile.readJson(info, "/BasicInfo/AppVersionCode"),
+                "path": configFile.jsonFile.readJsonFile(f"{os.path.expanduser('~')}/AppData/Local/OakStore/config/config.json", "/path/appInstallPath")+"/"+configFile.jsonFile.readJson(info, "/BasicInfo/AppPackageName"),
+                "executable_file": configFile.jsonFile.readJson(info, "/BasicInfo/ExecutableFile")
+            }
+        })
+        logger.info("已将应用添加至已安装列表")
+        logger.info("安装完成")
+        return True
 
-
-
-# unzip("../core1.py", "../cache")
-# APPInfo("../data")
-installAPP("D:\\Python\\OSP-File\\260401.osp")

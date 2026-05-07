@@ -66,5 +66,7 @@ def app_list_operation(operation="get", data=None):
         logger.info(f"已移除应用：{data}")
         return True
 
+def uninstall(app):
+    pass
 
 # print(app_list_operation("remove", data = "oakstore.store1"))

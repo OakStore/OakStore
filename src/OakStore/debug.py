@@ -1,8 +1,10 @@
 import tkinter as tk
 from tkinter import ttk
+from tkinter import messagebox
 import os
 from . import configFile
 from . import internet
+from . import osp
 
 def Debug():
     root = tk.Tk()
@@ -33,6 +35,8 @@ def Debug():
 
     download_button = ttk.Button(download, text="从github下载测试包", command=lambda: internet.download("https://github.com/OakStore/OSP-File/raw/refs/heads/main/260401.zip", configFile.jsonFile.readJsonFile(f"{os.path.expanduser('~')}/AppData/Local/OakStore/config/config.json", "/path/cachePath"), progress_callback=download_test))
     download_button.place(x=20, y=75)
+    download_and_install_button = ttk.Button(download, text="从github下载测试包并安装", command=lambda: download_and_install_test())
+    download_and_install_button.place(x=20, y=125)
     download_progressbar = ttk.Progressbar(download, length=300)
     download_progressbar.place(x=150, y=76)
 
@@ -42,7 +46,13 @@ def Debug():
         root.update()
 
     def download_and_install_test():
-        pass
+        if internet.download("https://github.com/OakStore/OSP-File/raw/refs/heads/main/260401.zip", configFile.jsonFile.readJsonFile(f"{os.path.expanduser('~')}/AppData/Local/OakStore/config/config.json", "/path/cachePath"), progress_callback=download_test):
+            if osp.installAPP("D:\\Python\\OSP-File\\260401.osp"):
+                messagebox.showinfo("安装成功")
+            else:
+                messagebox.showerror("安装失败")
+        else:
+            messagebox.showerror("安装失败")
 
     root.mainloop()
 
