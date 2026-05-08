@@ -1,7 +1,9 @@
 
 import os
+import shutil
 import json
 from loguru import logger
+from . import configFile
 
 
 def init_app_list():
@@ -45,7 +47,14 @@ def app_list_operation(operation="get", data=None):
         app_list = json.load(f)
 
     if operation == "get":
-        return list(app_list.keys())
+        if data is None:
+            return list(app_list.keys())
+        else:
+            if data in app_list:
+                return configFile.jsonFile.readJson(app_list, f"/{data}")
+            else:
+                logger.info(f"应用 {data} 不存在")
+                return False
 
     elif operation == "add":
         for key, value in data.items():
@@ -67,6 +76,37 @@ def app_list_operation(operation="get", data=None):
         return True
 
 def uninstall(app):
-    pass
+    # 1. 获取应用信息
+    app_info = app_list_operation("get", app)
+    if not app_info:
+        logger.error(f"卸载失败，应用 {app} 不存在")
+        return False
+
+    # 2. 获取安装路径
+    install_path = app_info.get("path")
+    if not install_path:
+        logger.error(f"卸载失败，应用 {app} 的路径无效")
+        return False
+
+    # 3. 删除应用文件夹
+    try:
+        if os.path.exists(install_path):
+            shutil.rmtree(install_path)
+            logger.info(f"已删除应用文件夹：{install_path}")
+        else:
+            logger.warning(f"应用文件夹不存在：{install_path}")
+    except Exception as e:
+        logger.error(f"卸载失败，无法删除文件夹 {install_path}，错误：{e}")
+        return False
+
+    # 4. 从 AppList.json 移除应用
+    removed = app_list_operation("remove", app)
+    if not removed:
+        logger.error(f"卸载失败，无法从列表移除 {app}")
+        return False
+
+    logger.info(f"已卸载 {app}")
+    return True
+
 
 # print(app_list_operation("remove", data = "oakstore.store1"))
